@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#08090d">
+  <title>AI DEBATER — Арена аргументов</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div id="app">
+
+    <!-- ГЛАВНЫЙ ЭКРАН -->
+    <section id="home-screen" class="screen active">
+      <div class="noise"></div>
+
+      <header class="topbar">
+        <div class="logo">
+          <span class="logo-mark">D</span>
+          <span>AI DEBATER</span>
+        </div>
+        <div class="online">
+          <span></span> ARENA ONLINE
+        </div>
+      </header>
+
+      <main class="home-content">
+
+        <div class="hero">
+          <div class="eyebrow">INTELLIGENCE × ARGUMENT × PRESSURE</div>
+
+          <h1>
+            НЕ ПРОСТО<br>
+            <strong>СПОРЬ.</strong>
+          </h1>
+
+          <p>
+            Тренируй аргументацию против оппонента,
+            который не даст тебе лёгкой победы.
+          </p>
+
+          <button class="primary-btn huge" id="enter-arena-btn">
+            ВОЙТИ В АРЕНУ <span>→</span>
+          </button>
+        </div>
+
+        <div class="opponent-preview">
+          <div class="scanline"></div>
+          <div class="avatar-ring">
+            <img src="assets/avatar.png" alt="Оппонент">
+          </div>
+          <div class="opponent-info">
+            <span>ТЕКУЩИЙ ОППОНЕНТ</span>
+            <strong>АЛЕКСЕЙ</strong>
+            <small>АДВОКАТ • УРОВЕНЬ 07</small>
+          </div>
+        </div>
+
+        <div class="home-grid">
+
+          <div class="panel modes-panel">
+            <div class="panel-title">
+              <span>01</span>
+              ВЫБЕРИ РЕЖИМ
+            </div>
+
+            <div class="mode-list">
+
+              <button class="mode-card selected" data-mode="quick">
+                <div class="mode-number">01</div>
+                <div>
+                  <strong>Быстрый</strong>
+                  <small>3 раунда • 5 минут</small>
+                </div>
+                <span>→</span>
+              </button>
+
+              <button class="mode-card" data-mode="full">
+                <div class="mode-number">02</div>
+                <div>
+                  <strong>Полный дебат</strong>
+                  <small>5 раундов • глубокий анализ</small>
+                </div>
+                <span>→</span>
+              </button>
+
+              <button class="mode-card" data-mode="cross">
+                <div class="mode-number">03</div>
+                <div>
+                  <strong>Перекрёстный допрос</strong>
+                  <small>Вопросы • давление • ловушки</small>
+                </div>
+                <span>→</span>
+              </button>
+
+              <button class="mode-card" data-mode="logic">
+                <div class="mode-number">04</div>
+                <div>
+                  <strong>Тренировка логики</strong>
+                  <small>Найди ошибку в аргументе</small>
+                </div>
+                <span>→</span>
+              </button>
+
+              <button class="mode-card" data-mode="devil">
+                <div class="mode-number">05</div>
+                <div>
+                  <strong>Адвокат дьявола</strong>
+                  <small>Защищай позицию, которую не выбирал</small>
+                </div>
+                <span>→</span>
+              </button>
+
+              <button class="mode-card" data-mode="tournament">
+                <div class="mode-number">06</div>
+                <div>
+                  <strong>Турнир</strong>
+                  <small>5 сложных соперников</small>
+                </div>
+                <span>→</span>
+              </button>
+
+            </div>
+          </div>
+
+          <div class="panel stats-panel">
+            <div class="panel-title">
+              <span>02</span>
+              ТВОЙ ПРОФИЛЬ
+            </div>
+
+            <div class="rank-box">
+              <div class="rank-label">РАНГ</div>
+              <div class="rank-value" id="home-rank">НОВИЧОК</div>
+              <div class="rank-xp">
+                <div class="xp-bar">
+                  <div id="home-xp-bar"></div>
+                </div>
+                <span id="home-xp-text">0 XP</span>
+              </div>
+            </div>
+
+            <div class="stat-grid">
+              <div class="stat">
+                <span>ДЕБАТОВ</span>
+                <strong id="home-debates">0</strong>
+              </div>
+              <div class="stat">
+                <span>ПОБЕД</span>
+                <strong id="home-wins">0</strong>
+              </div>
+              <div class="stat">
+                <span>ЛОГИКА</span>
+                <strong id="home-logic">—</strong>
+              </div>
+              <div class="stat">
+                <span>УБЕДИТ.</span>
+                <strong id="home-persuasion">—</strong>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </section>
+
+
+    <!-- ЭКРАН ДЕБАТОВ -->
+    <section id="debate-screen" class="screen">
+
+      <header class="debate-header">
+        <button class="back-btn" id="leave-debate">← ВЫЙТИ</button>
+
+        <div class="debate-title">
+          <span id="debate-mode-label">БЫСТРЫЙ ДЕБАТ</span>
+          <strong id="topic-label">ТЕМА</strong>
+        </div>
+
+        <div class="timer" id="timer">05:00</div>
+      </header>
+
+      <div class="round-bar">
+        <div>
+          <span>РАУНД</span>
+          <strong id="round-number">1</strong>
+          <span>/</span>
+          <strong id="round-total">3</strong>
+        </div>
+
+        <div class="round-progress">
+          <div id="round-progress-fill"></div>
+        </div>
+      </div>
+
+      <main class="debate-arena">
+
+        <div class="topic-card">
+          <span>ТЕМА ДЕБАТА</span>
+          <h2 id="debate-topic">Загрузка...</h2>
+          <div class="position">
+            ТВОЯ ПОЗИЦИЯ:
+            <strong id="user-position">Загрузка...</strong>
+          </div>
+        </div>
+
+        <div class="opponent-zone">
+
+          <div class="opponent-avatar-container">
+            <div class="avatar-glow"></div>
+            <img id="debater-avatar" src="assets/avatar.png" alt="Алексей">
+            <div class="emotion" id="opponent-emotion">●</div>
+          </div>
+
+          <div class="opponent-bubble">
+            <div class="speaker">
+              <span>ОППОНЕНТ</span>
+              <strong id="opponent-name">АЛЕКСЕЙ</strong>
+            </div>
+
+            <div id="opponent-message">
+              Давайте начнём.
+            </div>
+          </div>
+
+        </div>
+
+        <div class="pressure-line">
+          <span id="pressure-label">ДАВЛЕНИЕ</span>
+          <div class="pressure">
+            <div id="pressure-fill"></div>
+          </div>
+          <span id="pressure-value">0%</span>
+        </div>
+
+        <div class="user-zone">
+
+          <div class="user-header">
+            <span>ТВОЙ ХОД</span>
+            <span id="argument-counter">0 / 500</span>
+          </div>
+
+          <textarea
+            id="argument-input"
+            maxlength="500"
+            placeholder="Сформулируй аргумент. Не просто утверждение — объясни ПОЧЕМУ..."
+          ></textarea>
+
+          <div class="argument-tools">
+            <span class="hint" id="argument-hint">
+              Тезис → доказательство → объяснение → ответ на возражение
+            </span>
+
+            <button class="submit-btn" id="submit-argument">
+              ОТПРАВИТЬ <span>↗</span>
+            </button>
+          </div>
+
+        </div>
+
+        <div class="feedback" id="feedback"></div>
+
+      </main>
+    </section>
+
+
+    <!-- РЕЗУЛЬТАТ -->
+    <section id="result-screen" class="screen">
+
+      <header class="topbar result-topbar">
+        <div class="logo">
+          <span class="logo-mark">D</span>
+          <span>AI DEBATER</span>
+        </div>
+      </header>
+
+      <main class="result-content">
+
+        <div class="result-heading">
+          <span>ДЕБАТ ЗАВЕРШЁН</span>
+          <h1 id="result-title">РЕЗУЛЬТАТ</h1>
+          <p id="result-subtitle"></p>
+        </div>
+
+        <div class="score-main">
+          <div class="score-circle">
+            <span>ИТОГОВЫЙ СЧЁТ</span>
+            <strong id="final-score">0</strong>
+            <small>/100</small>
+          </div>
+
+          <div class="result-verdict">
+            <span>ВЕРДИКТ АРЕНЫ</span>
+            <strong id="final-verdict">—</strong>
+          </div>
+        </div>
+
+        <div class="result-stats">
+
+          <div>
+            <span>ЛОГИКА</span>
+            <strong id="result-logic">0</strong>
+          </div>
+
+          <div>
+            <span>УБЕДИТЕЛЬНОСТЬ</span>
+            <strong id="result-persuasion">0</strong>
+          </div>
+
+          <div>
+            <span>ДОКАЗАТЕЛЬНОСТЬ</span>
+            <strong id="result-evidence">0</strong>
+          </div>
+
+          <div>
+            <span>КОНТРАРГУМЕНТ</span>
+            <strong id="result-rebuttal">0</strong>
+          </div>
+
+        </div>
+
+        <div class="analysis-panel">
+          <div class="panel-title">
+            <span>ANALYSIS</span>
+            РАЗБОР
+          </div>
+
+          <div id="analysis-content"></div>
+        </div>
+
+        <div class="result-actions">
+          <button class="primary-btn" id="again-btn">НОВЫЙ ДЕБАТ →</button>
+          <button class="secondary-btn" id="home-btn">В ГЛАВНОЕ МЕНЮ</button>
+        </div>
+
+      </main>
+    </section>
+
+  </div>
+
+  <script src="themes.js"></script>
+  <script src="modes.js"></script>
+  <script src="history.js"></script>
+  <script src="stats.js"></script>
+  <script src="mock-ai.js"></script>
+  <script src="debater.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
